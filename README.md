@@ -1,5 +1,7 @@
 # Beam Search – wie viele Kandidaten reichen, wenn es kein Zurück gibt? – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-beam-search-demo.streamlit.app/)**
+
 Viertes Stück der **Heuristische-Baumsuche-Linie** der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning" - ein Kind der Wurzel [greedy-best-first-demo](../greedy-best-first-demo): **Greedy Best-First Search (GBFS)** verfolgt **einen** Kandidaten und ist deshalb kurzsichtig (Lücke zum Optimum). **Beam Search** hält je Schicht die **k besten** Kandidaten parallel und beschneidet den Rest - aber **ohne Zurück**: was aus dem Strahl fällt, ist unwiederbringlich verloren. Die Breite k ist ein Regler zwischen "ein Pfad" (k = 1) und "fast alles".
 
 **Einordnung in die Linie:** derselbe Graph, dieselbe Instanz, derselbe Suchkern wie in [astar-demo](../astar-demo) und [ida-star-demo](../ida-star-demo) (dort korrektheitsgeprüft); GBFS, A\* und Uniform-Cost dienen als Vergleichsgrößen. Neu ist `beam_search` mit der Rangfolge **h** (nur Heuristik, Kind der Wurzel) oder **f = g + h** (wie A\*).
