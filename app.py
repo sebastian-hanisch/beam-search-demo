@@ -72,8 +72,11 @@ dem Strahl fällt, ist unwiederbringlich verloren. Damit ist die Breite k ein Re
 )
 st.caption(
     "Setzt auf [greedy-best-first-demo](https://github.com/sebastian-hanisch/greedy-best-first-demo) auf (derselbe Graph, "
-    "dieselbe Instanz; GBFS, A\\* und Uniform-Cost als Vergleich). Noch nicht gebaute Geschwister: Diverse Beam Search, "
-    "Monobeam, Monte Carlo Tree Search (MCTS), Beam Search + A\\* → Beam Stack Search."
+    "dieselbe Instanz; GBFS, A\\* und Uniform-Cost als Vergleich). Weitere Stücke der Linie, alle gebaut: "
+    "[diverse-beam-demo](https://github.com/sebastian-hanisch/diverse-beam-demo), "
+    "[monobeam-demo](https://github.com/sebastian-hanisch/monobeam-demo), "
+    "[mcts-demo](https://github.com/sebastian-hanisch/mcts-demo) (Monte Carlo Tree Search) und "
+    "[beam-stack-demo](https://github.com/sebastian-hanisch/beam-stack-demo) (Beam Search + A\\* → Beam Stack Search)."
 )
 
 with st.expander("So funktioniert Beam Search", expanded=True):
@@ -249,7 +252,7 @@ st.markdown(
 |---|---|---|
 | **Mehr Breite ist besser** | Im Median ja: die Lücke sinkt von 16 % (Breite 1) auf 0 % (ab Breite 5), ab Breite 8 waren alle 5 Instanzen optimal. Je Instanz nicht garantiert: bei 6 % der Instanzen (Größe 12, 15 % Hindernisse) ist irgendein breiterer Strahl schlechter, bei Größe 20 bei 14 %. | **Monobeam** (Lemons et al. 2022) setzt genau an dieser Nicht-Monotonie an |
 | **Die Suche findet immer eine Lösung** | Kein Zurück: ein schmaler Strahl kann das Ziel verlieren. Bei 15 % Hindernissen scheitern 20 % der Läufe (Breite 1-3), bei 40 % Hindernissen 60 % (Breite 1) und 40 % (Breite 2). Bei 40 % Hindernissen scheitert teils sogar ein breiterer Strahl, obwohl ein schmalerer das Ziel fand (10 % der Instanzen). Greedy Best-First mit Backtracking scheitert in diesen Läufen nie. | **Beam Stack Search** (Beam Search + Backtracking, Zhou & Hansen 2005) |
-| **Der Strahl ist billiger als A\\*** | Nur wenn man Lücke oder Scheitern in Kauf nimmt: bis Breite 4 unter A\\* (0.27x bis 0.78x der Expansionen), ab Breite 6 darüber (1.08x), bei Breite 8 1.24x. Zuverlässig optimal war er erst bei Breite 8 - dort teurer als A\\*. | A\\* / IDA\\* (optimal, ohne Breitenwahl) |
+| **Der Strahl ist billiger als A\\*** | Nur wenn man Lücke oder Scheitern in Kauf nimmt: bis Breite 5 unter A\\* (0.27x bis 0.97x der Expansionen), ab Breite 6 darüber (1.08x), bei Breite 8 1.24x. Zuverlässig optimal war er erst bei Breite 8 - dort teurer als A\\*. | A\\* / IDA\\* (optimal, ohne Breitenwahl) |
 | **Der Strahl spart Speicher** | Die hier gezählten Knoten sind alle entdeckten (wie bei A\\*, mit Closed-Set zur Duplikaterkennung). Ein echter Speicher-Strahl ohne Closed-Set bräuchte nur die Spitzenbreite (Median 6 bei Breite 3) - diese Variante ist hier nicht gebaut. | (nicht gebaut) |
 | **Unbegrenzte Breite = optimal** | Die Schicht-Suche findet den Pfad mit den wenigsten KANTEN. Auf diesen Rastern war er in allen getesteten Instanzen trotzdem optimal; ein konstruiertes Gegenbeispiel (Direktkante 10 gegen Umweg 3) zeigt, dass es allgemein nicht gilt. | Uniform-Cost / A\\* |
 | **Synthetische Instanzen** | Ein Raster mit Jitter, Vierer-Nachbarschaft, keine Zeitfenster, keine gerichteten Kanten. Andere Graphstrukturen wurden nicht gemessen. | Echte Straßennetze (hier nicht gebaut) |
@@ -286,6 +289,6 @@ Implementiert in `beam_algorithm.py` (Suchkerne aus der A*-Demo, `beam_search` n
 st.markdown("---")
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Heuristische Baumsuche: Greedy bis MCTS](https://sebastianhanisch.net/konzepte-heuristische-baumsuche.html)."
 )

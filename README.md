@@ -8,10 +8,10 @@ Viertes Stück der **Heuristische-Baumsuche-Linie** der "Konzepte"-Reihe für di
 
 ```
 Greedy Best-First Search (Wurzel)                                                          [gebaut]
- ├─ Beam Search → {Diverse Beam Search, Monobeam}          [Beam Search = DIESES STÜCK, Fortsetzungen nicht gebaut]
+ ├─ Beam Search → {Diverse Beam Search, Monobeam}          [Beam Search = DIESES STÜCK, Fortsetzungen gebaut]
  ├─ A* → Iterative Deepening A* (IDA*)                                                     [gebaut]
- └─ Monte Carlo Tree Search (MCTS)                                                         [nicht gebaut]
-Beam Search + A* → Beam Stack Search (Konvergenzpunkt)                                     [nicht gebaut]
+ └─ Monte Carlo Tree Search (MCTS)                                                         [gebaut]
+Beam Search + A* → Beam Stack Search (Konvergenzpunkt)                                     [gebaut]
 ```
 
 Ergebnis in Kürze: Die Vorab-Hypothese "**ein breiterer Strahl macht das Ergebnis besser - monoton**" gilt **im Median, aber nicht je Instanz**: die Lücke sinkt von 16 % (Breite 1) auf 0 % (ab Breite 5), ab Breite 8 waren alle 5 Instanzen optimal - doch bei 2 bis 14 % der Instanzen ist irgendein breiterer Strahl **schlechter** (höhere Kosten, oder er **scheitert**, obwohl ein schmalerer das Ziel fand). Der eigentliche Preis eines schmalen Strahls ist nicht die Lücke, sondern das **Scheitern** (kein Zurück): 20 % der Läufe bei Breite 1-3, bei 40 % Hindernissen 60 % (Breite 1). Und billiger als A\* ist der Strahl **nur solange man Lücke oder Scheitern in Kauf nimmt**: bis Breite 5 weniger Expansionen als A\*, ab Breite 6 mehr - zuverlässig optimal (Breite 8) kostet er das 1.24-Fache von A\*.
@@ -59,13 +59,13 @@ Die einzelne Instanz weicht von den Sweep-Medianen ab - die Mediane oben sind di
 
 ## Was nicht funktioniert hat / Grenzen
 
-- **Vorab-Hypothese "ein breiterer Strahl macht das Ergebnis besser - monoton" - nur im Mittel bestätigt, je Instanz WIDERLEGT.** 2–14 % der Instanzen werden mit mehr Breite schlechter. Das ist genau die Schwäche, an der **Monobeam** (Lemons et al. 2022) ansetzt - hier nur gemessen, nicht behoben.
-- **Kein Zurück = Scheitern.** Ein schmaler Strahl verliert das Ziel in einer Sackgasse; bei dichten Hindernissen häufig (40 %: 60 % bei Breite 1). Die Wurzel-Überraschung "mehr Hindernisse, kleinere Lücke" ist hier kein Trost: der Strahl verliert dort das Ziel statt der Qualität. Beam Search + Backtracking ist **Beam Stack Search** (Zhou & Hansen 2005) - nicht gebaut.
+- **Vorab-Hypothese "ein breiterer Strahl macht das Ergebnis besser - monoton" - nur im Mittel bestätigt, je Instanz WIDERLEGT.** 2–14 % der Instanzen werden mit mehr Breite schlechter. Das ist genau die Schwäche, an der **Monobeam** (Lemons et al. 2022) ansetzt - hier nur gemessen, nicht behoben (siehe [monobeam-demo](../monobeam-demo)).
+- **Kein Zurück = Scheitern.** Ein schmaler Strahl verliert das Ziel in einer Sackgasse; bei dichten Hindernissen häufig (40 %: 60 % bei Breite 1). Die Wurzel-Überraschung "mehr Hindernisse, kleinere Lücke" ist hier kein Trost: der Strahl verliert dort das Ziel statt der Qualität. Beam Search + Backtracking ist **Beam Stack Search** (Zhou & Hansen 2005) - siehe [beam-stack-demo](../beam-stack-demo).
 - **Billiger als A\* nur mit Verzicht.** Zuverlässig optimal (5 von 5) ist der Strahl erst bei Breite 8 - dort teurer als A\* (1.24x Expansionen). Die "kleinste Breite, die optimal ist" ist außerdem nur im Nachhinein bekannt.
 - **Der gezählte Speicher ist der von A\*-Art:** alle entdeckten Knoten (mit Closed-Set zur Duplikaterkennung). Ein echter Speicher-Strahl ohne Closed-Set bräuchte nur die Spitzenbreite (Median 6 bei Breite 3) - diese Variante ist nicht gebaut.
 - **Unbegrenzte Breite findet die wenigsten KANTEN, nicht zwingend den billigsten Pfad.** Auf diesen Rastern war das Ergebnis in allen getesteten Instanzen (120) trotzdem optimal; ein konstruiertes Gegenbeispiel (Direktkante 10 gegen Umweg 3) zeigt, dass es allgemein nicht gilt (als Test hinterlegt).
 - **Ursachen nicht isoliert:** warum die Rangfolge f bei Breite 1 mehr Ausfälle hat, oder warum die Nicht-Monotonie bei Größe 20 häufiger ist als bei Größe 12, wird hier nicht getrennt untersucht - gemessen ist nur das Ergebnis (5 bzw. 50 Instanzen).
-- **Nicht gebaut:** Diverse Beam Search, Monobeam, Beam Stack Search, Stochastic Beam Search.
+- **Nicht gebaut:** Stochastic Beam Search (Diverse Beam Search, Monobeam und Beam Stack Search sind eigene Stücke).
 - **Synthetische Instanzen:** ein Raster mit Jitter, Vierer-Nachbarschaft, keine Zeitfenster, keine gerichteten Kanten. Andere Graphstrukturen wurden nicht gemessen.
 
 ## Verifikation
@@ -109,6 +109,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Heuristische Baumsuche: Greedy bis MCTS](https://sebastianhanisch.net/konzepte-heuristische-baumsuche.html).
